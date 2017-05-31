@@ -1,5 +1,6 @@
 package winona.indira.ilo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -10,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import winona.indira.ilo.fragment.GmapFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -89,9 +88,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_maps:
                 //fragment = new GmapFragment();
-                GmapFragment gmapFragment = new GmapFragment();
-                transaction.addToBackStack(GmapFragment.class.getName());
-                transaction.replace(R.id.fragment_contain, gmapFragment).commit();
+//                GmapFragment gmapFragment = new GmapFragment();
+//                transaction.addToBackStack(GmapFragment.class.getName());
+//                transaction.replace(R.id.fragment_contain, gmapFragment).commit();
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_aboutApp:
                 break;
