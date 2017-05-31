@@ -1,10 +1,7 @@
 package winona.indira.ilo;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,11 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import winona.indira.ilo.fragment.BerandaFragment;
 import winona.indira.ilo.fragment.GmapFragment;
-import winona.indira.ilo.fragment.NavCategoryFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,14 +23,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -73,9 +67,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -84,33 +76,33 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        Fragment fragment = null;
-        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+//        Fragment fragment = null;
+//        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
         int id = item.getItemId();
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (id) {
             case R.id.nav_home:
-                fragment = new BerandaFragment();
+            //    fragment = new BerandaFragment();
                 break;
             case R.id.nav_Category:
-                fragment = new NavCategoryFragment();
+              //  fragment = new NavCategoryFragment();
                 break;
             case R.id.nav_maps:
-                fragment = new GmapFragment();
-//                Intent intent = new Intent(this, GmapFragment.class);
-//                startActivity(intent);
-
+                //fragment = new GmapFragment();
+                GmapFragment gmapFragment = new GmapFragment();
+                transaction.addToBackStack(GmapFragment.class.getName());
+                transaction.replace(R.id.fragment_contain, gmapFragment).commit();
                 break;
             case R.id.nav_aboutApp:
                 break;
             case R.id.nav_aboutUs:
         }
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.fragment_contain, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//        transaction.replace(R.id.fragment_contain, fragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
