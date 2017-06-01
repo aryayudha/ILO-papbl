@@ -60,6 +60,10 @@ public class MapsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        }
         setContentView(R.layout.activity_maps);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -72,11 +76,13 @@ public class MapsActivity extends AppCompatActivity
                 .build();
         mGoogleApiClient.connect();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**
      * Builds the map when the Google Play services client is successfully connected.
      */
+
     @Override
     public void onConnected(Bundle connectionHint) {
         // Build the map.
@@ -111,9 +117,15 @@ public class MapsActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
+        m = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(-7.9519712,112.6113408))
+                .title("Univ Brawijaya")
+                .snippet("Jalan Veteran"));
 
-        m =  mMap.addMarker(new MarkerOptions().position(mDefaultLocation)
-                .draggable(true));
+        m = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(-7.9824459,112.6143983))
+                .title("sesuatu")
+                .snippet("Jalan Veteran"));
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -140,7 +152,7 @@ public class MapsActivity extends AppCompatActivity
             }
         });
 
-        //    m = mMap.addMarker(new MarkerOptions().position(mDefaultLocation));
+            m = mMap.addMarker(new MarkerOptions().position(mDefaultLocation));
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
 

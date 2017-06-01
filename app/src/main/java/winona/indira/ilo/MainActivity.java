@@ -85,12 +85,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_Category:
               //  fragment = new NavCategoryFragment();
-                break;
-            case R.id.nav_maps:
-                //fragment = new GmapFragment();
 //                GmapFragment gmapFragment = new GmapFragment();
 //                transaction.addToBackStack(GmapFragment.class.getName());
 //                transaction.replace(R.id.fragment_contain, gmapFragment).commit();
+
+                break;
+            case R.id.nav_maps:
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
                 break;
