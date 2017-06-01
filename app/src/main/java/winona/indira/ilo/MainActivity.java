@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import winona.indira.ilo.fragment.BerandaFragment;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,6 +84,9 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_home:
             //    fragment = new BerandaFragment();
+                BerandaFragment berandaFragment = new BerandaFragment();
+                transaction.addToBackStack(null);
+                transaction.replace(R.id.fragment_contain, berandaFragment).commit();
                 break;
             case R.id.nav_Category:
               //  fragment = new NavCategoryFragment();

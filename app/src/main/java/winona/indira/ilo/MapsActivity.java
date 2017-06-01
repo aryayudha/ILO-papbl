@@ -23,6 +23,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback,
@@ -53,6 +58,9 @@ public class MapsActivity extends AppCompatActivity
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
+//    //private DatabaseReference databaseReference;
+//    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//    DatabaseReference databaseReference = database.getReference("laundry");
 
 
 
@@ -117,15 +125,55 @@ public class MapsActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        m = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(-7.9519712,112.6113408))
-                .title("Univ Brawijaya")
-                .snippet("Jalan Veteran"));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("laundry");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    Laundry laundry = postSnapshot.getValue(Laundry.class);
 
-        m = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(-7.9824459,112.6143983))
-                .title("sesuatu")
-                .snippet("Jalan Veteran"));
+
+//                    Double latitude = (Double)postSnapshot.child("latitude").getValue();
+//                    Double longitude = (Double)postSnapshot.child("longitude").getValue();
+//                    String alamat = (String)postSnapshot.child("laundry_alamat").getValue();
+//                    String name = (String)postSnapshot.child("laundry_nama").getValue();
+//
+//                    if (latitude!=null&&longitude!=null){
+//                        m = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).title(name).snippet(alamat));
+//                    }
+
+                    m = mMap.addMarker(new MarkerOptions().position(new LatLng(-7.9519712,112.6113408)).title(laundry.getLaundry_nama()).snippet(laundry.getLaundry_alamat()));
+                }
+
+//                LatLng newLocation = new LatLng(
+//                        dataSnapshot.child("latitude").getValue(Double.class),
+//                        dataSnapshot.child("longitude").getValue(Double.class)
+//                );
+
+
+//                m = mMap.addMarker(new MarkerOptions()
+//                        .position(newLocation));
+//                        .title(dataSnapshot.child("laundry_alamat").getValue(String.class))
+//                        .snippet(dataSnapshot.child("laundry_nama").getValue(String.class)));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        m = mMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(-7.9519712,112.6113408))
+//                .title("Univ Brawijaya")
+//                .snippet("Jalan Veteran"));
+//
+//        m = mMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(-7.9824459,112.6143983))
+//                .title("sesuatu")
+//                .snippet("Jalan Veteran"));
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
